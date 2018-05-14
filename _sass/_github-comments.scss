@@ -1,0 +1,35 @@
+
+#github-comments {
+  text-align: center;
+}
+
+#github-comments hr {
+  border-top: inset 1px white;
+  margin: 8px 2px;
+}
+
+#github-comments-list {
+}
+
+#github-comments-comment {
+  text-align: left;
+  background-color:#E7E8E2;
+  border:1px solid #b3b3b3;
+  margin:2.5em 0;
+  padding:10px;
+}
+
+#github-comments-comment-hr {
+  border-top: inset 1px white;
+  margin: 8px 0px;
+}
+
+#github-comments-comment p {
+  margin:0px;
+}
+
+#github-comments-comment img {
+  display: inline;
+  vertical-align: middle;
+  margin: 2px 10px 2px 2px;
+}

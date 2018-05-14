@@ -19,7 +19,13 @@ As any lazy (or smart, depending on your point of view) programmer would, I star
 - *_assets/js/github-comments.js*: The JavaScript code for fetching comments executes an AJAX call to the GitHub API and receives all comments with markdown content. It then simply builds a HTML-partial containing the relevant information and appends it to the comment list. The code is dependent on jQuery, so I also include it in the site's header. Extra dependencies are always something to consider, but I guess jQuery is somewhat OK to add.
 - *_sass/_github-comments.scss*: Pages need to look good, so I also ~~add~~ copy some CSS. Don't forget to *@import* it in the *main.scss* file.
 
-Now all there is left to do is add a few lines to existing files. I add entries for *site.github-repository* and *page.github-issueid* in the respective files and use *% include github-comments.html %* to include the Jekyll partial. Finally, I open a GitHub issue for this blog post. Et Voila, it's done.
+Now all there is left to do is add a few lines to existing files. I add entries for *site.github-repository* and *page.github-issueid* in the respective files and use *% include github-comments.html %* to include the Jekyll partial. Finally, I open a GitHub issue for this blog post. Et voila, it's done.
+
+### final remarks
+
+This is the first blog post with actual content, and I still have to discover the right tone and wording for these kind of posts. So the style of writing may vary for all future posts.
+
+Anyway, since my blog now has comments, please feel free to leave some! Even short "That's not very interesting"-type comments will let me know that someone actually read this post and will help me to improve future content.
 
 
 

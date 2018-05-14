@@ -1,8 +1,7 @@
 // Original code taken with permission from : https://github.com/dwilliamson/donw.io/blob/master/public/js/github-comments.js
-
 // use of ajax vs getJSON for headers use to get markdown (body vs body_html)
 
-function ParseLinkHeader(lnk)
+function parseLinkHeader(lnk)
 {
     var entries = lnk.split(",");
     var links = { };
@@ -18,45 +17,38 @@ function ParseLinkHeader(lnk)
     return links;
 }
 
-function ShowComments(repo_name, comment_id, page_id)
+function loadComments(repo_name, comment_id, page_id)
 {
-    var api_comments_url = "https://api.github.com/repos/" + repo_name + "/issues/" + comment_id + "/comments" + "?page=" + page_id;
+    var read_comments_url = "https://api.github.com/repos/" + repo_name + "/issues/" + comment_id + "/comments" + "?page=" + page_id;
 
-    $.ajax(api_comments_url, {
+    $.ajax(read_comments_url, {
         headers: {Accept: "application/vnd.github.v3.html+json"},
         dataType: "json",
         success: function(comments, textStatus, jqXHR) {
 
-            // Add post button to first page
-            if (page_id == 1)
-            {
-                var url = "https://github.com/" + repo_name + "/issues/" + comment_id + "#new_comment_field";
-                $("#github-comments-list").append("<form action='" + url + "' rel='nofollow'> <input type='submit' value='Post a comment on Github' /> </form>");
-            }
-
             // Individual comments
             $.each(comments, function(i, comment) {
-
                 var date = new Date(comment.created_at);
 
-                var t = "<div id='gh-comment'>";
-                t += "<img src='" + comment.user.avatar_url + "' width='24px'>";
-                t += "<b><a href='" + comment.user.html_url + "'>" + comment.user.login + "</a></b>";
-                t += " posted at ";
-                t += "<em>" + date.toUTCString() + "</em>";
-                t += "<div id='gh-comment-hr'></div>";
-                t += comment.body_html;
-                t += "</div>";
+                var t = "<div id='github-comments-comment'>";
+                t += 		"<img src='" + comment.user.avatar_url + "' width='24px'>";
+                t += 		"<b><a href='" + comment.user.html_url + "'>" + comment.user.login + "</a></b>";
+                t += 		" posted at ";
+                t += 		"<em>" + date.toUTCString() + "</em>";
+                t += 		"<div id='github-comments-comment-hr'></div>";
+                t += 		comment.body_html;
+                t += 		"</div>";
+				
                 $("#github-comments-list").append(t);
             });
 
             // Call recursively if there are more pages to display
             var linksResponse = jqXHR.getResponseHeader("Link");
             if (linksResponse) {
-                var links = ParseLinkHeader(jqXHR.getResponseHeader("Link"));
+                var links = parseLinkHeader(jqXHR.getResponseHeader("Link"));
                 if ("next" in links)
                 {
-                    ShowComments(repo_name, comment_id, page_id+1);
+                    loadComments(repo_name, comment_id, page_id+1);
                 }
             }
         },
@@ -66,10 +58,16 @@ function ShowComments(repo_name, comment_id, page_id)
     });
 }
 
-function DoGithubComments(repo_name, comment_id)
+function buildGithubComments(repo_name, comment_id)
 {
     $(document).ready(function ()
     {
-        ShowComments(repo_name, comment_id, 1);
+		
+		var post_comment_url = "https://github.com/" + repo_name + "/issues/" + comment_id + "#new_comment_field";
+		
+		// Add post button to first page 
+		$("#github-comments-list").append("<form action='" + post_comment_url + "' rel='nofollow'> <input type='submit' value='Post a comment on Github' /> </form>");
+		
+        loadComments(repo_name, comment_id, 1);
     });
 }

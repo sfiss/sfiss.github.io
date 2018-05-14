@@ -2,6 +2,13 @@
 <html lang="{{ page.lang | default: site.lang | default: "en" }}">
 
   {% include head.html %}
+  
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" />
+  
+  <script
+	  src="https://code.jquery.com/jquery-3.2.1.min.js"
+	  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	  crossorigin="anonymous"></script>
 
   <body>
 
@@ -15,9 +22,12 @@
 
     <div class="page-content">
       <div class="wrapper">
-	  
         {% if page.comments == 'github' %}
 			{% include github-comments.html %}
+		{% endif %}
+		
+		{% if page.comments == 'disqus' %}
+			{% include disqus-comments.html %}
 		{% endif %}
       </div>
     </div>
